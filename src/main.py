@@ -1,7 +1,12 @@
 import pandas as pd
 from collect_urls import *
 from collect_information import *
+import os
 
+try:
+    os.remove('urls.txt')
+except:
+    pass
 get_pages(mainpage, pagenum, main_tag, keyword)
 df = pd.DataFrame()
 with open('urls.txt', 'r') as f:

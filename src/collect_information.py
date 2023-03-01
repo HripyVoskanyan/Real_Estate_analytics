@@ -100,10 +100,41 @@ def collect_data_lng(results):
     return None
 
 
+def collect_additional(results):
+    for row in results:
+            try:
+                temp = row.findAll(config['additional'][0], attrs={
+                    'class': config['additional'][1]})[1].findAll(config['additional'][2])
+                some_string = ""
+                for li in temp:
+                    some_string += (li.get_text() + '--')
+
+                return some_string + '\n'
+            except:
+                pass
+    return None
+
+
+def collect_facilities(results):
+    for row in results:
+            try:
+                temp = row.find(config['facilities'][0], attrs={
+                    'class': config['facilities'][1]}).findAll(config['facilities'][2])
+                some_string = ""
+                for li in temp:
+                    some_string += (li.get_text() + '--')
+
+                return some_string + '\n'
+            except:
+                pass
+    return None
+
+
 def collect_all(results, df):
     app = {'address': collect_address(results), 'sqm': collect_sqm(results),
            'info': collect_info(results), 'price': collect_price(results),
            'more': collect_more(results), 'views': collect_views(results),
+           'additional': collect_additional(results), 'facilities': collect_facilities(results),
            'data-lat': collect_data_lat(results), 'data-lng': collect_data_lng(results)}
     df = df.append(app, ignore_index=True)
     return df
