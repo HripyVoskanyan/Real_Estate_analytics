@@ -1,16 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
-from config import *
 
 
-def create_soup(url):
+def create_soup(url, config):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
     results = soup.find_all(config['main'][0], attrs={'class': config['main'][1]})
     return results
 
 
-def collect_address(results):
+def collect_address(results, config):
     for row in results:
         try:
             temp = row.find(config['address'][0], attrs={
@@ -22,7 +21,7 @@ def collect_address(results):
     return None
 
 
-def collect_sqm(results):
+def collect_sqm(results, config):
     for row in results:
         try:
             temp = row.find(config['sqm'][0], attrs={
@@ -34,7 +33,31 @@ def collect_sqm(results):
     return None
 
 
-def collect_info(results):
+def collect_rooms(results, config):
+    for row in results:
+        try:
+            temp = row.find(config['rooms'][0], attrs={
+                'class': config['rooms'][1]}).text.replace(
+                '\n', "")
+            return temp
+        except:
+            pass
+    return None
+
+
+def collect_floor(results, config):
+    for row in results:
+        try:
+            temp = row.find(config['floor'][0], attrs={
+                'class': config['floor'][1]}).text.replace(
+                '\n', "")
+            return temp
+        except:
+            pass
+    return None
+
+
+def collect_info(results, config):
     for row in results:
         try:
             temp = row.find(config['info'][0], attrs={
@@ -45,7 +68,7 @@ def collect_info(results):
     return None
 
 
-def collect_price(results):
+def collect_price(results, config):
     for row in results:
         try:
             temp = row.find(config['price'][0], attrs={
@@ -56,7 +79,7 @@ def collect_price(results):
     return None
 
 
-def collect_more(results):
+def collect_more(results, config):
     for row in results:
         try:
             temp = row.find(config['more'][0], attrs={
@@ -67,7 +90,7 @@ def collect_more(results):
     return None
 
 
-def collect_views(results):
+def collect_views(results, config):
     for row in results:
         try:
             temp = row.find(config['views'][0], attrs={
@@ -78,7 +101,7 @@ def collect_views(results):
     return None
 
 
-def collect_data_lat(results):
+def collect_data_lat(results, config):
     for row in results:
             try:
                 temp = row.find("div", attrs={"id": "yandex_map_item_view"})['data-lat']
@@ -89,7 +112,7 @@ def collect_data_lat(results):
     return None
 
 
-def collect_data_lng(results):
+def collect_data_lng(results, config):
     for row in results:
             try:
                 temp = row.find("div", attrs={"id": "yandex_map_item_view"})['data-lng']
@@ -100,7 +123,7 @@ def collect_data_lng(results):
     return None
 
 
-def collect_additional(results):
+def collect_additional(results, config):
     for row in results:
             try:
                 temp = row.findAll(config['additional'][0], attrs={
@@ -115,7 +138,7 @@ def collect_additional(results):
     return None
 
 
-def collect_facilities(results):
+def collect_facilities(results, config):
     for row in results:
             try:
                 temp = row.find(config['facilities'][0], attrs={
@@ -130,11 +153,12 @@ def collect_facilities(results):
     return None
 
 
-def collect_all(results, df):
-    app = {'address': collect_address(results), 'sqm': collect_sqm(results),
-           'info': collect_info(results), 'price': collect_price(results),
-           'more': collect_more(results), 'views': collect_views(results),
-           'additional': collect_additional(results), 'facilities': collect_facilities(results),
-           'data-lat': collect_data_lat(results), 'data-lng': collect_data_lng(results)}
+def collect_all(results, df, config):
+    app = {'address': collect_address(results, config), 'sqm': collect_sqm(results, config),
+           'rooms': collect_rooms(results, config), 'floor': collect_floor(results, config),
+           'info': collect_info(results, config), 'price': collect_price(results, config),
+           'more': collect_more(results, config), 'views': collect_views(results, config),
+           'additional': collect_additional(results, config), 'facilities': collect_facilities(results, config),
+           'data-lat': collect_data_lat(results, config), 'data-lng': collect_data_lng(results, config)}
     df = df.append(app, ignore_index=True)
     return df
