@@ -24,10 +24,10 @@ def collect_address(results, config):
 def collect_sqm(results, config):
     for row in results:
         try:
-            temp = row.find(config['sqm'][0], attrs={
-                'class': config['sqm'][1]}).text.replace(
-                '\n', "")
+            temp = row.findAll(config['sqm'][0], attrs={
+                'class': config['sqm'][1]})[config['sqm'][2]].text.replace('\n', "")
             return temp
+
         except:
             pass
     return None
@@ -36,10 +36,10 @@ def collect_sqm(results, config):
 def collect_rooms(results, config):
     for row in results:
         try:
-            temp = row.find(config['rooms'][0], attrs={
-                'class': config['rooms'][1]}).text.replace(
-                '\n', "")
+            temp = row.findAll(config['rooms'][0], attrs={
+                'class': config['rooms'][1]})[config['rooms'][2]].text.replace('\n', "")
             return temp
+
         except:
             pass
     return None
@@ -48,10 +48,10 @@ def collect_rooms(results, config):
 def collect_floor(results, config):
     for row in results:
         try:
-            temp = row.find(config['floor'][0], attrs={
-                'class': config['floor'][1]}).text.replace(
-                '\n', "")
+            temp = row.findAll(config['floor'][0], attrs={
+                'class': config['floor'][1]})[config['floor'][2]].text.replace('\n', "").replace(' ', '')
             return temp
+
         except:
             pass
     return None
@@ -137,6 +137,20 @@ def collect_additional(results, config):
                 pass
     return None
 
+def collect_additional0(results, config):
+    for row in results:
+            try:
+                temp = row.findAll(config['additional'][0], attrs={
+                    'class': config['additional'][1]})[0].findAll(config['additional'][2])
+                some_string = ""
+                for li in temp:
+                    some_string += (li.get_text() + '--')
+
+                return some_string + '\n'
+            except:
+                pass
+    return None
+
 
 def collect_facilities(results, config):
     for row in results:
@@ -158,7 +172,8 @@ def collect_all(results, df, config):
            'rooms': collect_rooms(results, config), 'floor': collect_floor(results, config),
            'info': collect_info(results, config), 'price': collect_price(results, config),
            'more': collect_more(results, config), 'views': collect_views(results, config),
-           'additional': collect_additional(results, config), 'facilities': collect_facilities(results, config),
+           'additional': collect_additional(results, config), 'additional0': collect_additional0(results, config),
+           'facilities': collect_facilities(results, config),
            'data-lat': collect_data_lat(results, config), 'data-lng': collect_data_lng(results, config)}
     df = df.append(app, ignore_index=True)
     return df

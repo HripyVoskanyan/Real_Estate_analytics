@@ -7,13 +7,13 @@ class_2 = 'd-block'
 
 config2 = {'main': ['div', 'estate-container col-md-12'],
           'address': ['div', 'estate__address text-dark py-1'],
-          'sqm': ['span', 'estate__props d-inline-block bg-danger p-2'],
-          'rooms': ['span', 'estate__props d-inline-block bg-danger p-2'],
-          'floor': ['div', 'card__item-floor'],
+          'sqm': ['li', 'd-flex align-items-center py-1', 1],
+          'rooms': ['li', 'd-flex align-items-center py-1', 0],
+          'floor': ['li', 'd-flex align-items-center py-1', 2],
           'price': ['div', 'estate__price d-flex justify-content-start align-items-center lead font-weight-bold'],
           'more': ['ul', 'item-view-list-params'],
-          'facilities': ['div', 'row item-view-facilities mb-4', 'li'],
-          'additional': ['div', 'row item-view-facilities mb-4', 'li'],
+          'facilities': ['div', 'estate__facilities text-secondary text-uppercase py-3', 'li'],
+          'additional': ['div', 'estate__facilities text-secondary text-uppercase py-3 col-md-8', 'li'],
           'views': ['span', 'item-view-count'],
           'coord': ['div', 'row no-gutters mb-4']
           }
