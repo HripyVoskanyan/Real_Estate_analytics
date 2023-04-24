@@ -24,6 +24,17 @@ def collect_address(results, config):
 def collect_sqm(results, config):
     for row in results:
         try:
+            temp = row.find(config['sqm'][0], attrs={
+                'class': config['sqm'][1]}).text.replace('\n', "")
+            return temp
+
+        except:
+            pass
+    return None
+
+def collect_sqm1(results, config):
+    for row in results:
+        try:
             temp = row.findAll(config['sqm'][0], attrs={
                 'class': config['sqm'][1]})[config['sqm'][2]].text.replace('\n', "")
             return temp
@@ -103,77 +114,100 @@ def collect_views(results, config):
 
 def collect_data_lat(results, config):
     for row in results:
-            try:
-                temp = row.find("div", attrs={"id": "yandex_map_item_view"})['data-lat']
-                return temp
+        try:
+            temp = row.find("div", attrs={"id": "yandex_map_item_view"})['data-lat']
+            return temp
 
-            except:
-                pass
+        except:
+            pass
     return None
 
 
 def collect_data_lng(results, config):
     for row in results:
-            try:
-                temp = row.find("div", attrs={"id": "yandex_map_item_view"})['data-lng']
-                return temp
+        try:
+            temp = row.find("div", attrs={"id": "yandex_map_item_view"})['data-lng']
+            return temp
 
-            except:
-                pass
+        except:
+            pass
     return None
 
 
 def collect_additional(results, config):
     for row in results:
-            try:
-                temp = row.findAll(config['additional'][0], attrs={
-                    'class': config['additional'][1]})[1].findAll(config['additional'][2])
-                some_string = ""
-                for li in temp:
-                    some_string += (li.get_text() + '--')
+        try:
+            temp = row.findAll(config['additional'][0], attrs={
+                'class': config['additional'][1]})[1].findAll(config['additional'][2])
+            some_string = ""
+            for li in temp:
+                some_string += (li.get_text() + '--')
 
-                return some_string + '\n'
-            except:
-                pass
+            return some_string + '\n'
+        except:
+            pass
     return None
+
 
 def collect_additional0(results, config):
     for row in results:
-            try:
-                temp = row.findAll(config['additional'][0], attrs={
-                    'class': config['additional'][1]})[0].findAll(config['additional'][2])
-                some_string = ""
-                for li in temp:
-                    some_string += (li.get_text() + '--')
+        try:
+            temp = row.findAll(config['additional'][0], attrs={
+                'class': config['additional'][1]})[0].findAll(config['additional'][2])
+            some_string = ""
+            for li in temp:
+                some_string += (li.get_text() + '--')
 
-                return some_string + '\n'
-            except:
-                pass
+            return some_string + '\n'
+        except:
+            pass
     return None
 
 
 def collect_facilities(results, config):
     for row in results:
-            try:
-                temp = row.find(config['facilities'][0], attrs={
-                    'class': config['facilities'][1]}).findAll(config['facilities'][2])
-                some_string = ""
-                for li in temp:
-                    some_string += (li.get_text() + '--')
+        try:
+            temp = row.find(config['facilities'][0], attrs={
+                'class': config['facilities'][1]}).findAll(config['facilities'][2])
+            some_string = ""
+            for li in temp:
+                some_string += (li.get_text() + '--')
 
-                return some_string + '\n'
-            except:
-                pass
+            return some_string + '\n'
+        except:
+            pass
+    return None
+
+
+def collect_Adddate(results, config):
+    for row in results:
+        try:
+            temp = row.find(config['adddate'][0], attrs={'class': config['adddate'][1]}).text.replace('\n', "")
+            return temp
+        except:
+            pass
+    return None
+
+
+def collect_Editdate(results, config):
+    for row in results:
+        try:
+            temp = row.findAll(config['editdate'][0], attrs={'class': config['editdate'][1]})[5].text.replace('\n', "")
+            return temp
+        except:
+            pass
     return None
 
 
 def collect_all(results, df, config):
     app = {'address': collect_address(results, config), 'sqm': collect_sqm(results, config),
+           'sqm0': collect_sqm1(results, config),
            'rooms': collect_rooms(results, config), 'floor': collect_floor(results, config),
            'info': collect_info(results, config), 'price': collect_price(results, config),
            'more': collect_more(results, config), 'views': collect_views(results, config),
            'additional': collect_additional(results, config), 'additional0': collect_additional0(results, config),
            'facilities': collect_facilities(results, config),
-           'data-lat': collect_data_lat(results, config), 'data-lng': collect_data_lng(results, config)}
+           'data-lat': collect_data_lat(results, config), 'data-lng': collect_data_lng(results, config),
+           'adddate': collect_Adddate(results, config), 'editdate': collect_Editdate(results, config)}
     df = df.append(app, ignore_index=True)
     return df
