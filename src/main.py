@@ -9,25 +9,25 @@ from assets.config_rent1 import *
 from assets.config_rent2 import *
 
 try:
-    os.remove('urls.txt')
+    os.remove("urls.txt")
 except:
     pass
 
 
-#all_urls = get_all_urls(sitemap_url)
-#write_in_file(all_urls)
+# all_urls = get_all_urls(sitemap_url)
+# write_in_file(all_urls)
 df = pd.DataFrame()
-with open('item_urls.txt', 'r') as f:
+with open("item_urls.txt", "r") as f:
     for url0 in f:
         print(url0)
-        url0 = url0.replace(' ', '')
-        url0 = url0.replace('\n', '')
+        url0 = url0.replace(" ", "")
+        url0 = url0.replace("\n", "")
         df = collect_all(create_soup(url0, config), df, config)
         time.sleep(3)
-df.to_csv('C:\AUA\Capstone\code\data\df_test.csv')
+df.to_csv("C:\AUA\Capstone\code\data\df_test.csv")
 
 
-'''
+"""
 try:
     print("start")
     os.remove('urls.txt')
@@ -47,8 +47,8 @@ with open('urls.txt', 'r') as f:
         time.sleep(3)
 df.to_excel('C:\AUA\Capstone\code\data\df2.xlsx')
 
-'''
-'''
+"""
+"""
 # rent1
 try:
     os.remove('urls.txt')
@@ -63,8 +63,8 @@ with open('urls.txt', 'r') as f:
         url0 = url0.replace('\n', '')
         df = collect_all(create_soup(url0, config3), df, config3)
 df.to_excel('C:\AUA\Capstone\code\data\df_rent1.xlsx')
-'''
-'''
+"""
+"""
 # rent2
 try:
     os.remove('urls.txt')
@@ -80,4 +80,4 @@ with open('urls.txt', 'r') as f:
         df = collect_all(create_soup(url0, config4), df, config4)
         time.sleep(4)
 df.to_excel('C:\AUA\Capstone\code\data\df_rent2.xlsx')
-'''
+"""
