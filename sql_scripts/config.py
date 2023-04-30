@@ -1,6 +1,0 @@
-cred_json = 'capstone-384712-b263fb15af4a.json'
-project_id = 'capstone-384712'
-dataset_id = 'capstone-384712.Apartments'
-table_name = 'staging_data'
-dataset_id = 'Apartments'
-folder_id = '1DsFpWLqpY4JVlwVwtW1G1w5zk5UZDsee'
