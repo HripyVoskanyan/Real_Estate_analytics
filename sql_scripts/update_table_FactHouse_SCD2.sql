@@ -5,6 +5,7 @@ MERGE {project_id}.{dataset_id}.{dst_table_name} dst USING (
     CAST(src.ingestion_date AS DATE) as ingestion_date,
     Max(src.staging_raw_id) AS staging_raw_id,
     ds.StreetID_SK,
+    dr.RegionID_SK,
     dd.DistrictID_SK,
     dp.PlatformID_SK,
     dt.TypeID_SK,
@@ -52,6 +53,7 @@ MERGE {project_id}.{dataset_id}.{dst_table_name} dst USING (
   from
     {project_id}.{dataset_id}.{src_table_name} src
     LEFT JOIN capstone-384712.Apartments.DimPlatform_SCD1 dp ON src.platform = dp.PlatformName
+    LEFT JOIN capstone-384712.Apartments.DimRegion_SCD1 dr ON src.city = dr.RegionName
     LEFT JOIN capstone-384712.Apartments.DimStreet_SCD1 ds ON src.street = ds.StreetName
     LEFT JOIN capstone-384712.Apartments.DimDistrict_SCD1 dd ON src.district = dd.DistrictName
     LEFT JOIN capstone-384712.Apartments.DimType_SCD1 dt ON src.type = dt.TypeName
@@ -62,6 +64,7 @@ MERGE {project_id}.{dataset_id}.{dst_table_name} dst USING (
     src.ListingID_NK,
     CAST(src.ingestion_date AS DATE),
     ds.StreetID_SK,
+    dr.RegionID_SK,
     dd.DistrictID_SK,
     dp.PlatformID_SK,
     dt.TypeID_SK,
@@ -108,7 +111,7 @@ MERGE {project_id}.{dataset_id}.{dst_table_name} dst USING (
     src.Internet
 ) src ON dst.ListingID_NK = src.ListingID_NK WHEN NOT MATCHED THEN INSERT (
   ListingID_NK, ingestion_date, Staging_Raw_ID,
-  StreetID_SK, DistrictID_SK, PlatformID_SK,
+  StreetID_SK, RegionID_SK, DistrictID_SK, PlatformID_SK,
   TypeID_SK, HouseTypeID_SK, AddDateID_SK,
   EditDateID_SK, SQM, Rooms, Floors,
   Price, Views, Lng, Lat, EuroWindows,
@@ -127,6 +130,7 @@ VALUES
     Ingestion_date,
     Staging_Raw_ID,
     src.StreetID_SK,
+    src.RegionID_SK,
     src.DistrictID_SK,
     src.PlatformID_SK,
     src.TypeID_SK,
@@ -174,6 +178,7 @@ VALUES
   ) WHEN MATCHED
   AND (
     dst.StreetID_SK <> src.StreetID_SK
+    OR dst.RegionID_SK <> src.RegionID_SK
     OR dst.DistrictID_SK <> src.DistrictID_SK
     OR dst.PlatformID_SK <> src.PlatformID_SK
     OR dst.TypeID_SK <> src.TypeID_SK
@@ -186,6 +191,7 @@ VALUES
 UPDATE
 SET
   StreetID_SK = src.StreetID_SK,
+  RegionID_SK = src.RegionID_SK,
   DistrictID_SK = src.DistrictID_SK,
   PlatformID_SK = src.PlatformID_SK,
   TypeID_SK = src.TypeID_SK,

@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS {project_id}.{dataset_id}.{table_name} (
   DistrictID_SK String,
   PlatformID_SK String,
   TypeID_SK string,
+  RegionID_SK String,
   HouseTypeID_SK string,
   AddDateID_SK String,
   EditDateID_SK string,
@@ -55,8 +56,9 @@ CREATE TABLE IF NOT EXISTS {project_id}.{dataset_id}.{table_name} (
   FOREIGN KEY(HouseTypeID_SK) REFERENCES Apartments.DimHouseType_SCD1(HouseTypeID_SK) NOT ENFORCED,
   FOREIGN KEY(AddDateID_SK) REFERENCES Apartments.DimAddDate_SCD1(AddDateID_SK) NOT ENFORCED,
   FOREIGN KEY(EditDateID_SK) REFERENCES Apartments.DimEditDate_SCD1(EditDateID_SK) NOT ENFORCED,
+  FOREIGN KEY(RegionID_SK) REFERENCES Apartments.DimRegion_SCD1(RegionID_SK) NOT ENFORCED,
   PRIMARY KEY(
-    StreetID_SK, DistrictID_SK, TypeID_SK,
+    StreetID_SK, DistrictID_SK, TypeID_SK, RegionID_SK,
     HouseTypeID_SK, PlatformID_SK, AddDateID_SK,
     EditDateID_SK
   ) NOT ENFORCED);
