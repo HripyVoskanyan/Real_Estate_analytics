@@ -137,7 +137,7 @@ VALUES
     src.HouseTypeID_SK,
     src.AddDateID_SK,
     src.EditDateID_SK,
-    src.SQM,
+    CAST(src.SQM AS STRING),
     CAST(src.rooms AS STRING),
     src.Floor,
     src.Price,
@@ -183,7 +183,7 @@ VALUES
     OR dst.PlatformID_SK <> src.PlatformID_SK
     OR dst.TypeID_SK <> src.TypeID_SK
     OR dst.HouseTypeID_SK <> src.HouseTypeID_SK
-    OR dst.SQM <> src.SQM
+    OR dst.SQM <> CAST(src.SQM AS STRING)
     OR dst.Rooms <> CAST(src.rooms AS STRING)
     OR dst.Price <> src.Price
     OR dst.Floors <> src.Floor
@@ -196,7 +196,7 @@ SET
   PlatformID_SK = src.PlatformID_SK,
   TypeID_SK = src.TypeID_SK,
   HouseTypeID_SK = src.HouseTypeID_SK,
-  SQM = src.SQM,
+  SQM = CAST(src.SQM AS STRING),
   Rooms = CAST(src.rooms AS STRING),
   Floors = src.Floor,
   Price = src.Price
