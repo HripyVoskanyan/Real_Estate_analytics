@@ -60,7 +60,6 @@ df.editdate = df.editdate.str.slice(start=-12).replace(" ", "")
 df.adddate = df.adddate.str.replace("FOR SALE", "")
 df.editdate = df.editdate.str.replace("FOR SALE", "")
 df["addyear"] = pd.DatetimeIndex(df["adddate"]).year
-
 df["edityear"] = pd.DatetimeIndex(df["editdate"]).year
 df["addmonth"] = pd.DatetimeIndex(df["adddate"]).month
 df["editmonth"] = pd.DatetimeIndex(df["editdate"]).month
@@ -68,8 +67,10 @@ df["addday"] = pd.DatetimeIndex(df["adddate"]).day
 df["editday"] = pd.DatetimeIndex(df["editdate"]).day
 df["addquarter"] = pd.DatetimeIndex(df["adddate"]).quarter
 df["editquarter"] = pd.DatetimeIndex(df["editdate"]).quarter
-df["adddate"] = pd.to_datetime(df["adddate"])
-df["editdate"] = pd.to_datetime(df["editdate"])
+df['adddate'] = df['adddate'].str.replace(' ', '')
+df['editdate'] = df['editdate'].str.replace(' ', '')
+df["adddate"] = pd.to_datetime(df["adddate"], format='%d.%m.%Y')
+df["editdate"] = pd.to_datetime(df["editdate"], format='%d.%m.%Y')
 df.price = df.price.str.replace(",", "")
 df["platform"] = "MyRealty.am"
 df["housetype"] = np.where(
