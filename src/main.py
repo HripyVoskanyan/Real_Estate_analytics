@@ -24,7 +24,7 @@ with open("item_urls.txt", "r") as f:
         url0 = url0.replace("\n", "")
         df = collect_all(create_soup(url0, config), df, config)
         time.sleep(3)
-df.to_csv("C:\AUA\Capstone\code\data\df_test.csv")
+df.to_csv("C:\AUA\Capstone\code\data\data_new1.csv")
 
 
 """
