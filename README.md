@@ -26,9 +26,9 @@ For getting the live data in the dashboard, download the pbix file into your com
 
 ### Usage
 To use this repository, you can clone it to your local machine:
-`git clone https://github.com/HripyVoskanyan/Real_Estate_analytics.git
+`git clone https://github.com/HripyVoskanyan/Real_Estate_analytics.git`
 
 ### Contributing
 If you want to contribute to this repository, you can fork it and create a pull request with your changes. 
 Please make sure to follow the existing code style and add tests for your code and use your credentials for Google Drive and Cloud.
-`
+
