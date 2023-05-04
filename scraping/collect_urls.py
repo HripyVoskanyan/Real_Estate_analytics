@@ -1,11 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import re
-import os
-import logging
-from config import log_folder
 from tqdm import tqdm
-import xml.etree.ElementTree as ET
 from logger_scraping import *
 
 

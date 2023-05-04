@@ -1,8 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import os
-import logging
-from config import log_folder
 from logger_scraping import *
 
 
