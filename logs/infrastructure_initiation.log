@@ -1,0 +1,40 @@
+2023-05-04 15:55:32,408 - INFO - Client object has been created in capstone-384712
+2023-05-04 15:55:33,481 - INFO - Schema Apartmentshas been created in capstone-384712
+2023-05-04 15:55:33,866 - INFO - DimDistrict_SCD1 has been dropped}
+2023-05-04 15:55:34,266 - INFO - DimStreet_SCD1 has been dropped}
+2023-05-04 15:55:34,669 - INFO - DimPlatform_SCD1 has been dropped}
+2023-05-04 15:55:35,293 - INFO - DimType_SCD1 has been dropped}
+2023-05-04 15:55:35,679 - INFO - DimHouseType_SCD1 has been dropped}
+2023-05-04 15:55:36,057 - INFO - DimAddDate_SCD1 has been dropped}
+2023-05-04 15:55:36,450 - INFO - DimEditDate_SCD1 has been dropped}
+2023-05-04 15:55:36,840 - INFO - DimRegion_SCD1 has been dropped}
+2023-05-04 15:55:37,218 - INFO - FactHouse_SCD2 has been dropped}
+2023-05-04 15:55:37,631 - INFO - DimDistrict_SCD1 has been created}
+2023-05-04 15:55:38,016 - INFO - DimStreet_SCD1 has been created}
+2023-05-04 15:55:38,397 - INFO - DimPlatform_SCD1 has been created}
+2023-05-04 15:55:38,807 - INFO - DimType_SCD1 has been created}
+2023-05-04 15:55:39,214 - INFO - DimHouseType_SCD1 has been created}
+2023-05-04 15:55:39,576 - INFO - DimAddDate_SCD1 has been created}
+2023-05-04 15:55:39,932 - INFO - DimEditDate_SCD1 has been created}
+2023-05-04 15:55:40,309 - INFO - DimRegion_SCD1 has been created}
+2023-05-04 15:55:40,833 - INFO - FactHouse_SCD2 has been created}
+2023-05-04 18:06:54,437 - INFO - Client object has been created in capstone-384712
+2023-05-04 18:06:55,805 - INFO - Schema Apartmentshas been created in capstone-384712
+2023-05-04 18:06:56,329 - INFO - DimDistrict_SCD1 has been dropped
+2023-05-04 18:06:56,945 - INFO - DimStreet_SCD1 has been dropped
+2023-05-04 18:06:57,515 - INFO - DimPlatform_SCD1 has been dropped
+2023-05-04 18:06:58,028 - INFO - DimType_SCD1 has been dropped
+2023-05-04 18:06:58,464 - INFO - DimHouseType_SCD1 has been dropped
+2023-05-04 18:06:58,877 - INFO - DimAddDate_SCD1 has been dropped
+2023-05-04 18:06:59,385 - INFO - DimEditDate_SCD1 has been dropped
+2023-05-04 18:06:59,894 - INFO - DimRegion_SCD1 has been dropped
+2023-05-04 18:07:00,405 - INFO - FactHouse_SCD2 has been dropped
+2023-05-04 18:07:00,935 - INFO - DimDistrict_SCD1 has been created
+2023-05-04 18:07:01,632 - INFO - DimStreet_SCD1 has been created
+2023-05-04 18:07:02,052 - INFO - DimPlatform_SCD1 has been created
+2023-05-04 18:07:02,573 - INFO - DimType_SCD1 has been created
+2023-05-04 18:07:03,018 - INFO - DimHouseType_SCD1 has been created
+2023-05-04 18:07:03,452 - INFO - DimAddDate_SCD1 has been created
+2023-05-04 18:07:03,900 - INFO - DimEditDate_SCD1 has been created
+2023-05-04 18:07:04,313 - INFO - DimRegion_SCD1 has been created
+2023-05-04 18:07:04,928 - INFO - FactHouse_SCD2 has been created
