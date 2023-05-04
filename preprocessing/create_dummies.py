@@ -1,4 +1,8 @@
 import numpy as np
+import logging
+import os
+from config import log_folder
+from logger_preprocessing import *
 
 
 def create_columns(df):
@@ -11,6 +15,7 @@ def create_columns(df):
     Returns:
     None
     """
+    logging.info("Starting creating empty columns...")
     df["eurowindows"] = np.nan
     df["irondoor"] = np.nan
     df["openbalcony"] = np.nan
@@ -42,6 +47,7 @@ def create_columns(df):
     df["logha"] = np.nan
     df["garage"] = np.nan
     df["internet"] = np.nan
+    logging.info("Creating empty columns successfully done.")
 
 
 def create_dummy_columns(df, dt, name):
@@ -56,6 +62,7 @@ def create_dummy_columns(df, dt, name):
     Returns:
     None
     """
+    logging.info("Starting creating dummy columns...")
     for key in dt.keys():
         rn = 0
         value = dt[key]
@@ -70,3 +77,4 @@ def create_dummy_columns(df, dt, name):
             except:
                 df[value][rn] = 0
             rn += 1
+    logging.info("Creation of dummy columns: successfully done.")
