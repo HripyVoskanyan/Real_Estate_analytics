@@ -1,7 +1,4 @@
 import numpy as np
-import logging
-import os
-from config import log_folder
 from logger_preprocessing import *
 
 

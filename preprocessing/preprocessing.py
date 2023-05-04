@@ -12,26 +12,20 @@ Modules required:
 - assets.config (configuration file)
 - create_dummies (module to create dummy variables)
 
-Notes:
-- The script drops the 'Unnamed: 0' column if it exists in the input data.
-- The script converts the 'address' column to the 'City', 'District', and 'Street' columns.
-- The script creates new columns from the 'sqm' column, including 'Sqm', 'rooms', and 'floor'.
-- The script extracts date information from the 'adddate' and 'editdate' columns, including 'addyear', 'edityear',
-  'addmonth', 'editmonth', 'addday', 'editday', 'addquarter', and 'editquarter'.
-- The script adds the 'platform' column with a platform name.
-- The script adds the 'housetype' and 'type' columns based on the values in the 'info' column.
-- The script creates dummy variables from the 'additional' column based on the information in the 'info_dict' dictionary.
-- The script drops the 'more', 'additional', 'facilities', and 'additional0' columns.
-- The script renames the 'data-lat', 'data-lng', and 'id' columns to 'Lat', 'Lng', and 'ListingID_NK', respectively.
-"""
+Notes: - The script drops the 'Unnamed: 0' column if it exists in the input data. - The script converts the 'address'
+column to the 'City', 'District', and 'Street' columns. - The script creates new columns from the 'sqm' column,
+including 'Sqm', 'rooms', and 'floor'. - The script extracts date information from the 'adddate' and 'editdate'
+columns, including 'addyear', 'edityear', 'addmonth', 'editmonth', 'addday', 'editday', 'addquarter',
+and 'editquarter'. - The script adds the 'platform' column with a platform name. - The script adds the 'housetype'
+and 'type' columns based on the values in the 'info' column. - The script creates dummy variables from the
+'additional' column based on the information in the 'info_dict' dictionary. - The script drops the 'more',
+'additional', 'facilities', and 'additional0' columns. - The script renames the 'data-lat', 'data-lng',
+and 'id' columns to 'Lat', 'Lng', and 'ListingID_NK', respectively. """
 
 import pandas as pd
 from assets.config import *
 from create_dummies import *
 from datetime import datetime
-from config import log_folder
-import logging
-import os
 from logger_preprocessing import *
 
 
