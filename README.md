@@ -19,7 +19,8 @@ To scrape and preprocess the data run `main.py` and `preprocessing.py`.
 
 ### Data Warehousing
 In order to store the data into its place, run in the python console `infrastructure_initiation.py` only for the first time. However, please note, that it was already created and in order not to lose the data you need to skip this step.
-Afterwards, just run `tasks.py`, which will store the data in the right tables.
+Afterwards, just run `flow.py`, which will store the data in the right tables. Give ingestion_date and reload parameters, so the data will uploaded correctly. For instance:
+`python flow.py --ingestion_date "2023-05-04" --reload True`
 
 ### Dashboard
 For getting the live data in the dashboard, download the pbix file into your computer and click on Refresh. After several minutes the dashboard will be up-to-date.
