@@ -12,6 +12,7 @@ This repository contains code and data about an end-to-end pipeline for storing 
 
 ### Requirements
 To have the necessary libraries run the following code:
+
 `pip install -r requirements.txt`
 
 ### Scrape and Preprocess
@@ -20,6 +21,7 @@ To scrape and preprocess the data run `main.py` and `preprocessing.py`.
 ### Data Warehousing
 In order to store the data into its place, run in the python console `infrastructure_initiation.py` only for the first time. However, please note, that it was already created and in order not to lose the data you need to skip this step.
 Afterwards, just run `flow.py`, which will store the data in the right tables. Give ingestion_date and reload parameters, so the data will uploaded correctly. For instance:
+
 `python flow.py --ingestion_date "2023-05-04" --reload True`
 
 ### Dashboard
