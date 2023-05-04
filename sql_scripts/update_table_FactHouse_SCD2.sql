@@ -60,6 +60,8 @@ MERGE {project_id}.{dataset_id}.{dst_table_name} dst USING (
     LEFT JOIN capstone-384712.Apartments.DimHouseType_SCD1 dht ON src.housetype = dht.HouseTypeName
     LEFT JOIN capstone-384712.Apartments.DimAddDate_SCD1 da ON CAST(src.adddate AS DATE) = da.AddDate
     LEFT JOIN capstone-384712.Apartments.DimEditDate_SCD1 de ON CAST(src.editdate AS DATE) = de.EditDate
+  WHERE
+    src.ingestion_date = '{ingestion_date}'
   GROUP BY
     src.ListingID_NK,
     CAST(src.ingestion_date AS DATE),
@@ -111,16 +113,17 @@ MERGE {project_id}.{dataset_id}.{dst_table_name} dst USING (
     src.Internet
 ) src ON dst.ListingID_NK = src.ListingID_NK WHEN NOT MATCHED THEN INSERT (
   ListingID_NK, ingestion_date, Staging_Raw_ID,
-  StreetID_SK, RegionID_SK, DistrictID_SK, PlatformID_SK,
-  TypeID_SK, HouseTypeID_SK, AddDateID_SK,
-  EditDateID_SK, SQM, Rooms, Floors,
-  Price, Views, Lng, Lat, EuroWindows,
-  IronDoor, OpenBalcony, SecuritySystem,
-  Sunny, View_, RoadSide, CloseToTheBusStation,
-  Parking, Park, Elevator, Furniture,
-  Equipment, Balcony, StorageRoom,
-  Playground, Parquet, Tile, LaminateFlooring,
-  Heating, HotWater, Electricity, CentralHeating,
+  StreetID_SK, RegionID_SK, DistrictID_SK,
+  PlatformID_SK, TypeID_SK, HouseTypeID_SK,
+  AddDateID_SK, EditDateID_SK, SQM,
+  Rooms, Floors, Price, Views, Lng, Lat,
+  EuroWindows, IronDoor, OpenBalcony,
+  SecuritySystem, Sunny, View_, RoadSide,
+  CloseToTheBusStation, Parking, Park,
+  Elevator, Furniture, Equipment, Balcony,
+  StorageRoom, Playground, Parquet,
+  Tile, LaminateFlooring, Heating,
+  HotWater, Electricity, CentralHeating,
   Water, Water247, Gas, AirConditioning,
   Sewerage, Logha, Garage, Internet
 )
@@ -177,16 +180,18 @@ VALUES
     src.Internet
   ) WHEN MATCHED
   AND (
-    dst.StreetID_SK <> src.StreetID_SK
-    OR dst.RegionID_SK <> src.RegionID_SK
-    OR dst.DistrictID_SK <> src.DistrictID_SK
-    OR dst.PlatformID_SK <> src.PlatformID_SK
-    OR dst.TypeID_SK <> src.TypeID_SK
-    OR dst.HouseTypeID_SK <> src.HouseTypeID_SK
-    OR dst.SQM <> CAST(src.SQM AS STRING)
-    OR dst.Rooms <> CAST(src.rooms AS STRING)
-    OR dst.Price <> src.Price
-    OR dst.Floors <> src.Floor
+    IFNULL(dst.StreetID_SK, '') <> IFNULL(src.StreetID_SK, '')
+    OR IFNULL(dst.RegionID_SK, '') <> IFNULL(src.RegionID_SK, '')
+    OR IFNULL(dst.DistrictID_SK, '') <> IFNULL(src.DistrictID_SK, '')
+    OR IFNULL(dst.PlatformID_SK, '') <> IFNULL(src.PlatformID_SK, '')
+    OR IFNULL(dst.TypeID_SK, '') <> IFNULL(src.TypeID_SK, '')
+    OR IFNULL(dst.HouseTypeID_SK, '') <> IFNULL(src.HouseTypeID_SK, '')
+    OR IFNULL(dst.SQM, '') <> IFNULL(CAST(src.SQM AS STRING), '')
+    OR IFNULL(dst.Rooms, '') <> CAST(
+      IFNULL(src.rooms, '') AS STRING
+    )
+    OR IFNULL(dst.Price, '') <> IFNULL(src.Price, '')
+    OR IFNULL(dst.Floors, '') <> IFNULL(src.Floor, '')
   ) THEN
 UPDATE
 SET
