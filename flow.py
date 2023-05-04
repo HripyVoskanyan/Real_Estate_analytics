@@ -1,6 +1,5 @@
 import config
 import tasks
-from datetime import datetime
 import os
 import argparse
 from logger_flow import *
