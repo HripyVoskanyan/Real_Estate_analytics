@@ -107,7 +107,9 @@ def preprocess_myrealty(df):
         df = df.drop(["Unnamed: 0"], axis=1)
     except:
         pass
-    df.to_csv("C:\AUA\Capstone\code\data\data_new1_clean.csv")
+
+    path = os.path.dirname(os.getcwd()) + '\\' + '\\data\\data_new1_clean.csv'
+    df.to_csv(path)
     logging.info("Preprocessing completed successfully.")
 
 
@@ -155,5 +157,6 @@ def preprocess_besthouse(df):
         df = df.drop(["Unnamed: 0"], axis=1)
     except:
         pass
-    df.to_csv("C:\AUA\Capstone\code\data\data_new2_clean.csv")
+    path = os.path.dirname(os.getcwd()) + '\\' + '\\data\\data_new2_clean.csv'
+    df.to_csv(path)
     logging.info("Preprocessing completed successfully.")
