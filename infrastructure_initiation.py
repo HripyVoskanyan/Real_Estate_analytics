@@ -16,7 +16,7 @@ if __name__ == "__main__":
     tasks.create_schema(
         client=client, project_id=config.project_id, dataset_id=config.dataset_id
     )
-    logging.info(f"Schema {config.dataset_id }has been created in {config.project_id}")
+    logging.info(f"Schema {config.dataset_id } has been created in {config.project_id}")
 
     # dropping tables if they exist
     tasks.drop_table(

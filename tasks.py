@@ -113,7 +113,6 @@ def update_fact_table(
         ingestion_date=ingestion_date,
     )
     client.query(update_table_script)
-    print(update_table_script)
     print(
         "The {project_id}.{dataset_id}.{table_name} table has been updated".format(
             project_id=project_id, dataset_id=dataset_id, table_name=dst_table_name
@@ -173,6 +172,10 @@ def ingest_from_archive_to_staging_raw(client, gauth_cred, cred_json, client_con
             if_exists="append",
             credentials=credentials
         )
+        today = datetime.today().strftime("%Y-%m-%d")
+        dest_file_name = "{today}_staging_data.csv".format(today=today)
+        file_path = os.path.join(os.getcwd(), dest_file_name)
+        os.remove(file_path)
 
         print(f"Data uploaded.")
     else:
