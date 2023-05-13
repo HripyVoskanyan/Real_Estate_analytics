@@ -6,12 +6,12 @@ This repository contains code and data about an end-to-end pipeline for storing 
 
 * data: contains a version of data scraped from websites
 * assets: contains information about scraping parameters
-* preprocessing: containg .py files for preprocessing
+* preprocessing: containing .py files for preprocessing
 * sql_scripts: contains sql scripts to create, update, and delete tables
 * src: contains the main code of scraping
 
 ### Requirements
-To have the necessary libraries run the following code:
+To have the necessary libraries,  run the following code:
 
 `>> pip install -r requirements.txt`
 
@@ -42,13 +42,21 @@ to avoid duplicates. Here is an example:
 
 `>> python flow.py --ingestion_date=2023-05-13 --reload=True`
 
+Please note that there are four types of credential files that one would need to run the codes. Those can be either received via email (hripsime_voskanyan@edu.aua.am) or one can create their own.
+Credentials are as follows (naming is done according to my file names, as they are used in the configuration files):
+
+* clients_secrets.json: credentials for accessing the Google oAuth 2.0 client and the particular project. The information in the json are used for authenticating and authorizing access to the user. 
+* credentials.json: as the previous one, this is also used for authenticating and authorizing access to Google APIs on behalf of a user.
+* capstone-384712.json: these credentials are for a Google Cloud service account. The private key in it is necessary for authenticating the service account and accessing resources within the Google Cloud project.
+* my_creds.txt: this is an OAth 2.0 access token. It is used for authenticating and authorizing access to the Google Drive API with the specified scope. It allows the user to make API requests.
+
 ### Dashboard
 For getting the live data in the dashboard and see it with visuals, download the pbix file into your computer and click on Refresh. After several minutes the dashboard will be up-to-date.
 
 ### Test
 To check whether there is a data in the table, the following can be done:
 
-`>> python chech_data.py`
+`>> python check_data.py`
 
 This gives the first 10 lines of each table.
 
