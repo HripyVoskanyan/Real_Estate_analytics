@@ -22,9 +22,10 @@ def create_client(cred_json, project_id):
 
 
 def load_query(query_name):
-    for script in os.listdir(config.queries):
+    query_location = os.getcwd() + config.queries
+    for script in os.listdir(query_location):
         if query_name in script:
-            with open(config.queries + "\\" + script, "r") as script_file:
+            with open(query_location + "\\" + script, "r") as script_file:
                 sql_script = script_file.read()
             break
     return sql_script
@@ -112,6 +113,7 @@ def update_fact_table(
         ingestion_date=ingestion_date,
     )
     client.query(update_table_script)
+    print(update_table_script)
     print(
         "The {project_id}.{dataset_id}.{table_name} table has been updated".format(
             project_id=project_id, dataset_id=dataset_id, table_name=dst_table_name
@@ -119,8 +121,8 @@ def update_fact_table(
     )
 
 
-def ingest_from_archive_to_staging_raw(
-    gauth_cred, client_config_file, project_id, folder_id, dataset_id, table_name
+def ingest_from_archive_to_staging_raw(client, gauth_cred, cred_json, client_config_file,
+                                       project_id, folder_id, dataset_id, table_name
 ):
     gauth = GoogleAuth()
     gauth.LoadCredentialsFile(gauth_cred)
@@ -151,7 +153,7 @@ def ingest_from_archive_to_staging_raw(
         df["Staging_Raw_ID"] = df["Staging_Raw_ID"].astype(str)
 
         # Set the project ID and dataset name
-        client = bigquery.Client(project=project_id)
+        # client = client(project=project_id)
 
         # create a new BigQuery table with an inferred schema
         table_ref = client.dataset(dataset_id).table(table_name)
@@ -161,12 +163,15 @@ def ingest_from_archive_to_staging_raw(
         job_config.create_disposition = bigquery.CreateDisposition.CREATE_IF_NEEDED
         job_config.write_disposition = bigquery.WriteDisposition.WRITE_EMPTY
 
+        credentials = service_account.Credentials.from_service_account_file(cred_json)
+
         # upload the DataFrame to the new BigQuery table
         pandas_gbq.to_gbq(
             df,
             f"{project_id}.{dataset_id}.{table_name}",
             project_id=project_id,
             if_exists="append",
+            credentials=credentials
         )
 
         print(f"Data uploaded.")
@@ -175,7 +180,7 @@ def ingest_from_archive_to_staging_raw(
 
 
 def upload_from_local_to_drive(
-    gauth_cred, client_config_file, original_file_path, folder_id
+    gauth_cred, client_config_file, file_folder, orig_file_name, folder_id
 ):
     gauth = GoogleAuth()
 
@@ -188,6 +193,7 @@ def upload_from_local_to_drive(
 
     drive = GoogleDrive(gauth)
 
+    original_file_path = os.path.join(file_folder, orig_file_name)
     # Reads a CSV file from a given path and adds the current date as a column to the dataframe.
     df = pd.read_csv(original_file_path)
     today = datetime.today().strftime("%Y-%m-%d")
@@ -195,11 +201,30 @@ def upload_from_local_to_drive(
     df["ingestion_date"] = pd.to_datetime(df["ingestion_date"]).dt.date
 
     # Saves the updated dataframe to a new CSV file.
-    file_name = f"{today}_staging_data.csv"
-    file_path = f"C:/AUA/Capstone/code/data/{today}_staging_data.csv"
-    df.to_csv(file_path, index=False)
+    dest_file_name = "{today}_staging_data.csv".format(today=today)
+    dest_file_path = os.path.join(file_folder, dest_file_name)
+    df.to_csv(dest_file_path, index=False)
 
     # Uploads the new CSV file to a specified Google Drive folder.
-    file = drive.CreateFile({"title": file_name, "parents": [{"id": folder_id}]})
-    file.SetContentFile(file_path)
+    file = drive.CreateFile({"title": dest_file_name, "parents": [{"id": folder_id}]})
+    file.SetContentFile(dest_file_path)
     file.Upload()
+    # Close the file
+    file.content.close()
+
+    # Delete the file locally
+    os.remove(dest_file_path)
+
+
+def check_data(client, project_id, dataset_id, table_name):
+    check_data_script = load_query("select_from_table.sql").format(
+        project_id=project_id,
+        dataset_id=dataset_id,
+        table_name=table_name
+    )
+    job = client.query(check_data_script).to_dataframe()
+    if job.empty:
+        print('{} table is empty'.format(table_name))
+    else:
+        print('{} table as dataframe:'.format(table_name))
+        print(job)

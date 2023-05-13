@@ -1,6 +1,6 @@
 import config
 import tasks
-import os
+import time
 import argparse
 from logger_flow import *
 
@@ -27,11 +27,14 @@ if __name__ == "__main__":
     )
     logging.info(f"Client has been created in {config.project_id}")
 
+    data_folder = os.getcwd() + '\\' + config.data_file_folder
+
     # Upload csv file from local computer to Google Drive folder
     tasks.upload_from_local_to_drive(
         gauth_cred=config.gauth_cred,
         client_config_file=config.client_config_file,
-        original_file_path=config.original_file_path,
+        file_folder=data_folder,
+        orig_file_name=config.data_file,
         folder_id=config.folder_id,
     )
     logging.info(
@@ -49,6 +52,8 @@ if __name__ == "__main__":
 
     # Upload csv file from Google Drive to Google Cloud project
     tasks.ingest_from_archive_to_staging_raw(
+        client=client,
+        cred_json=config.cred_json,
         gauth_cred=config.gauth_cred,
         project_id=config.project_id,
         table_name=config.table_name,
@@ -135,6 +140,8 @@ if __name__ == "__main__":
         ingestion_date=args.ingestion_date,
     )
     logging.info(f"Data has been uploaded into DimRegion_SCD1.")
+
+    time.sleep(5)
     tasks.update_fact_table(
         client=client,
         project_id=config.project_id,

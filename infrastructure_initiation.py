@@ -1,8 +1,5 @@
 import config
 import tasks
-import os
-import logging
-from config import log_folder
 from logger_infrastructure import *
 
 if not os.path.exists(log_folder):
