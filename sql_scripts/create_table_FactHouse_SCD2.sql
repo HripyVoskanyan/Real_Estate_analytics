@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS {project_id}.{dataset_id}.{table_name} (
   AddDateID_SK String,
   EditDateID_SK string,
   SQM string,
-  Rooms String,
+  Rooms FLOAT64,
   Floors String,
   Price String,
   Views Float64,

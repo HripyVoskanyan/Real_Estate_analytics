@@ -13,7 +13,7 @@ MERGE {project_id}.{dataset_id}.{dst_table_name} dst USING (
     da.AddDateID_SK,
     de.EditDateID_SK,
     src.SQM,
-    CAST(src.rooms AS STRING) As Rooms,
+    src.rooms,
     src.Floor,
     src.Price,
     src.Views,
@@ -74,7 +74,7 @@ MERGE {project_id}.{dataset_id}.{dst_table_name} dst USING (
     da.AddDateID_SK,
     de.EditDateID_SK,
     src.SQM,
-    CAST(src.rooms AS STRING),
+    src.rooms,
     src.Floor,
     src.Price,
     src.Views,
@@ -141,7 +141,7 @@ VALUES
     src.AddDateID_SK,
     src.EditDateID_SK,
     CAST(src.SQM AS STRING),
-    CAST(src.rooms AS STRING),
+    src.rooms,
     src.Floor,
     src.Price,
     src.views,
@@ -187,9 +187,7 @@ VALUES
     OR IFNULL(dst.TypeID_SK, '') <> IFNULL(src.TypeID_SK, '')
     OR IFNULL(dst.HouseTypeID_SK, '') <> IFNULL(src.HouseTypeID_SK, '')
     OR IFNULL(dst.SQM, '') <> IFNULL(CAST(src.SQM AS STRING), '')
-    OR IFNULL(dst.Rooms, '') <> CAST(
-      IFNULL(src.rooms, '') AS STRING
-    )
+    OR IFNULL(CAST(dst.Rooms AS STRING), '') <> IFNULL(CAST(src.rooms AS STRING), '')
     OR IFNULL(dst.Price, '') <> IFNULL(src.Price, '')
     OR IFNULL(dst.Floors, '') <> IFNULL(src.Floor, '')
   ) THEN
@@ -202,6 +200,6 @@ SET
   TypeID_SK = src.TypeID_SK,
   HouseTypeID_SK = src.HouseTypeID_SK,
   SQM = CAST(src.SQM AS STRING),
-  Rooms = CAST(src.rooms AS STRING),
+  Rooms = src.rooms,
   Floors = src.Floor,
   Price = src.Price

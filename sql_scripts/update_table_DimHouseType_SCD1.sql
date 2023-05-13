@@ -1,4 +1,4 @@
--- Script to load data into DimDistrict
+-- Script to load data into DimHouseType
 MERGE {project_id}.{dataset_id}.{dst_table_name} dst using (
   SELECT
     housetype,
