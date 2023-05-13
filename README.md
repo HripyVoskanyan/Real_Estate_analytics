@@ -13,25 +13,51 @@ This repository contains code and data about an end-to-end pipeline for storing 
 ### Requirements
 To have the necessary libraries run the following code:
 
-`pip install -r requirements.txt`
+`>> pip install -r requirements.txt`
 
 ### Scrape and Preprocess
-To scrape and preprocess the data run `main.py` and `preprocessing.py`.
+As the data model includes data scraping, the user needs to scrape the data and then preprocess it.
+The scripts for that are in scraping and preprocessing folders.
+In scraping, run the main.py in terminal:
+
+`>> python main.py`
+
+Please note that you can change the configuration file name to which platform you want to scrape at that moment.
+After scraping the necessary data, preprocessing for the data file can be done:
+
+`>> python preprocessing.py`
+
 
 ### Data Warehousing
-In order to store the data into its place, run in the python console `infrastructure_initiation.py` only for the first time. However, please note, that it was already created and in order not to lose the data you need to skip this step.
-Afterwards, just run `flow.py`, which will store the data in the right tables. Give ingestion_date and reload parameters, so the data will uploaded correctly. For instance:
+After scraping the data it needs to be stored in the data warehouse, in this case, it is first archived in Google Drive using the necessary credentials, after which it is ingested into BigQuery project.
+After being ingested into staging raw table in BigQuery, it is being ingested into dimensional and fact tables.
 
-`python flow.py --ingestion_date "2023-05-04" --reload True`
+If the code is being run for the first time, infrastructure: dim and fact tables should be created, which can be done in this way:
+
+`>> python infrastructure_initiation.py`
+
+After that each time, when the data is being uploaded, flow.py should be run, with the right values to parameters  reload and ingestion_date. If the data is fresh and is being uploaded to dim and fact for the first time
+ingestion_date should be given the date it is being ingested. However, in case of errors or other technical problems, when the data is being ingested for the second time during one day: reloaded, reload argument should be given a True value in order
+to avoid duplicates. Here is an example:
+
+`>> python flow.py --ingestion_date=2023-05-13 --reload=True`
 
 ### Dashboard
-For getting the live data in the dashboard, download the pbix file into your computer and click on Refresh. After several minutes the dashboard will be up-to-date.
+For getting the live data in the dashboard and see it with visuals, download the pbix file into your computer and click on Refresh. After several minutes the dashboard will be up-to-date.
+
+### Test
+To check whether there is a data in the table, the following can be done:
+
+`>> python chech_data.py`
+
+This gives the first 10 lines of each table.
+
 
 ### Usage
 To use this repository, you can clone it to your local machine:
-`git clone https://github.com/HripyVoskanyan/Real_Estate_analytics.git`
+`git clone https://github.com/HripyVoskanyan/Real_Estate_analytics.git
 
 ### Contributing
 If you want to contribute to this repository, you can fork it and create a pull request with your changes. 
 Please make sure to follow the existing code style and add tests for your code and use your credentials for Google Drive and Cloud.
-
+`
